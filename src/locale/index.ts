@@ -1,10 +1,9 @@
 import { createI18n } from 'vue-i18n'
 
-import en from './en.json'
 import zhHans from './zh-Hans.json' // 简体中文
+// 粤语
 
 const messages = {
-  en,
   'zh-Hans': zhHans, // key 不能乱写，查看uniapp官网
 }
 
@@ -14,8 +13,6 @@ const i18n = createI18n({
   allowComposition: true,
 })
 
-console.log(uni.getLocale())
-console.log(i18n.global.locale)
 
 /**
  * 可以拿到原始的语言模板，非 vue 文件使用这个方法，
