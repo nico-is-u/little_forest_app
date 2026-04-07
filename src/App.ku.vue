@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view id="app-layout">
     <KuRootView />
     <FgTabbar v-if="isCurrentPageTabbar" />
   </view>

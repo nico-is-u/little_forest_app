@@ -19,5 +19,14 @@ onShow((options) => {
 </script>
 
 <style lang="scss">
+uni-page-body {
+  height: 100%;
+}
+
+#app-layout{
+  height: 100%;
+  background-color: var(--app-bg-color);
+}
+
 
 </style>

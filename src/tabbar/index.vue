@@ -1,3 +1,22 @@
+<template>
+  <view v-if="customTabbarEnable" class="border-and-fixed" @touchmove.stop.prevent>
+    <view id="app-tabbar"  class="flex items-center bg-white">
+      <view v-for="(item, index) in tabbarList" :key="'tabbar-item-' + index"
+        class="flex flex-col items-center justify-center flex-none" :class="tabbarStore.curIdx === index ? 'app-tabbar-item app-tabbar-item-active' : 'app-tabbar-item'"
+        @click="handleClick(index)"
+      >
+        <view v-if="item.isBulge" class="relative">
+          <!-- 中间一个鼓包tabbarItem的处理 -->
+          <view class="bulge">
+            <TabbarItem :item="item" :index="index" :active="tabbarStore.curIdx === index" class="text-center" is-bulge />
+          </view>
+        </view>
+        <TabbarItem v-else :item="item" :index="index" :active="tabbarStore.curIdx === index" class="relative px-3 text-center" />
+      </view>
+    </view>
+  </view>
+</template>
+
 <script setup lang="ts">
 // i-carbon-code
 import { customTabbarEnable, needHideNativeTabbar, tabbarCacheEnable } from './config'
@@ -74,42 +93,12 @@ onMounted(() => {
   })
 })
 // #endif
-const activeColor = 'var(--wot-color-theme, #1890ff)'
-const inactiveColor = '#666'
-function getColorByIndex(index: number) {
-  return tabbarStore.curIdx === index ? activeColor : inactiveColor
-}
 
 // 注意，上面处理的是自定义tabbar，下面处理的是原生tabbar，参考：https://unibest.tech/base/10-i18n
 onShow(() => {
   setTabbarItem()
 })
 </script>
-
-<template>
-  <view v-if="customTabbarEnable" class="h-50px pb-safe">
-    <view class="border-and-fixed bg-white" @touchmove.stop.prevent>
-      <view class="h-50px flex items-center">
-        <view
-          v-for="(item, index) in tabbarList" :key="index"
-          class="flex flex-1 flex-col items-center justify-center"
-          :style="{ color: getColorByIndex(index) }"
-          @click="handleClick(index)"
-        >
-          <view v-if="item.isBulge" class="relative">
-            <!-- 中间一个鼓包tabbarItem的处理 -->
-            <view class="bulge">
-              <TabbarItem :item="item" :index="index" class="text-center" is-bulge />
-            </view>
-          </view>
-          <TabbarItem v-else :item="item" :index="index" class="relative px-3 text-center" />
-        </view>
-      </view>
-
-      <view class="pb-safe" />
-    </view>
-  </view>
-</template>
 
 <style scoped lang="scss">
 .border-and-fixed {
@@ -118,27 +107,36 @@ onShow(() => {
   left: 0;
   right: 0;
   z-index: 1000;
-  border-top: 1px solid #eee;
   box-sizing: border-box;
 }
-// 中间鼓包的样式
-.bulge {
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  transform-origin: top center;
-  transform: translateX(-50%) scale(0.5) translateY(-33%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 250rpx;
-  height: 250rpx;
-  border-radius: 50%;
-  background-color: #fff;
-  box-shadow: inset 0 0 0 1px #fefefe;
 
-  &:active {
-    // opacity: 0.8;
+.bg-white{
+  background-color: rgb(255 255 255 / 0.9);
+}
+
+#app-tabbar{
+  height: 250rpx;
+  border-top-left-radius: 100rpx;
+  border-top-right-radius: 100rpx;
+  box-shadow: 0px -8rpx 40rpx rgba(0, 0, 0, 0.02);
+  border: 1rpx solid var(--app-border-color);
+
+  padding-left: 50rpx;
+}
+
+.app-tabbar-item{
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50rpx;
+
+  color: var(--app-text-color2);
+  font-family:sans-serif;
+  font-weight: 500;
+
+  &.app-tabbar-item-active{
+    background-color: var(--app-secondary-color);
+    font-weight: 700;
   }
 }
+
 </style>

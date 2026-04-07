@@ -22,20 +22,7 @@ export const TABBAR_STRATEGY_MAP = {
 export const selectedTabbarStrategy = TABBAR_STRATEGY_MAP.CUSTOM_TABBAR
 
 // TODO: 2/3. 使用 NATIVE_TABBAR 时，更新下面的 tabbar 配置
-export const nativeTabbarList: NativeTabBarItem[] = [
-  {
-    iconPath: 'static/tabbar/home.png',
-    selectedIconPath: 'static/tabbar/homeHL.png',
-    pagePath: 'pages/index/index',
-    text: '%tabbar.home%',
-  },
-  {
-    iconPath: 'static/tabbar/personal.png',
-    selectedIconPath: 'static/tabbar/personalHL.png',
-    pagePath: 'pages/me/me',
-    text: '%tabbar.me%',
-  },
-]
+export const nativeTabbarList: NativeTabBarItem[] = []
 
 // TODO: 3/3. 使用 CUSTOM_TABBAR 时，更新下面的 tabbar 配置
 // 如果需要配置鼓包，需要在 'tabbar/store.ts' 里面设置，最后在 `tabbar/index.vue` 里面更改鼓包的图片
@@ -43,12 +30,30 @@ export const customTabbarList: CustomTabBarItem[] = [
   {
     text: '%tabbar.home%',
     pagePath: 'pages/index/index',
-    // 注意 unocss 图标需要如下处理：（二选一）
-    // 1）在fg-tabbar.vue页面上引入一下并注释掉（见tabbar/index.vue代码第2行）
-    // 2）配置到 unocss.config.ts 的 safelist 中
-    iconType: 'unocss',
-    icon: 'i-carbon-home',
-    // badge: 'dot',
+    iconType: 'iconfont',
+    icon: 'app-iconfont if-icon-houses',
+    iconActive: 'app-iconfont if-icon-houses-filled',
+  },
+  {
+    text: '%tabbar.delivery%',
+    pagePath: 'pages/delivery/index',
+    iconType: 'iconfont',
+    icon: 'app-iconfont if-icon-a-package2-line',
+    iconActive: 'app-iconfont if-icon-a-package2-fill',
+  },
+  {
+    text: '%tabbar.group.buying%',
+    pagePath: 'pages/group_buying/index',
+    iconType: 'iconfont',
+    icon: 'app-iconfont if-icon-a-shoppingbox-line',
+    iconActive: 'app-iconfont if-icon-a-shoppingbox-fill',
+  },
+  {
+    text: '%tabbar.mine%',
+    pagePath: 'pages/mine/index',
+    iconType: 'iconfont',
+    icon: 'app-iconfont if-icon-user',
+    iconActive: 'app-iconfont if-icon-user-1-filled',
   },
   // 鼓包配置示例（2025-12-31）
   // 中间鼓包tabbarItem配置：通常是扫描按钮、发布按钮、更多按钮等，点击触发业务逻辑
@@ -61,30 +66,6 @@ export const customTabbarList: CustomTabBarItem[] = [
   //   icon: '/static/tabbar/scan.png',
   //   isBulge: true,
   // },
-  {
-    pagePath: 'pages/i18n/index',
-    text: '%tabbar.i18n%',
-    iconType: 'unocss',
-    icon: 'i-carbon-ibm-watson-language-translator',
-    // badge: 10,
-  },
-  {
-    pagePath: 'pages/about/about',
-    text: '%tabbar.about%',
-    // 1）在fg-tabbar.vue页面上引入一下并注释掉（见tabbar/index.vue代码第2行）
-    // 2）配置到 unocss.config.ts 的 safelist 中
-    iconType: 'unocss',
-    icon: 'i-carbon-menu',
-    // badge: 10,
-    roles: ['admin'],
-  },
-  {
-    pagePath: 'pages/me/me',
-    text: '%tabbar.me%',
-    iconType: 'unocss',
-    icon: 'i-carbon-user',
-    // badge: 10,
-  },
 
   // 其他类型演示
   // 1、uiLib

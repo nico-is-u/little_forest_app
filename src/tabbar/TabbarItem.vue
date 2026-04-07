@@ -1,41 +1,16 @@
-<script setup lang="ts">
-import type { CustomTabBarItem } from './types'
-import { getI18nText } from './i18n'
-import { tabbarStore } from './store'
-
-defineProps<{
-  item: CustomTabBarItem
-  index: number
-  isBulge?: boolean
-}>()
-
-function getImageByIndex(index: number, item: CustomTabBarItem) {
-  if (!item.iconActive) {
-    console.warn('image 模式下，需要配置 iconActive (高亮时的图片），否则无法切换高亮图片')
-    return item.icon
-  }
-  return tabbarStore.curIdx === index ? item.iconActive : item.icon
-}
-</script>
-
 <template>
   <view class="flex flex-col items-center justify-center">
-    <template v-if="item.iconType === 'uiLib'">
-      <!-- TODO: 以下内容请根据选择的UI库自行替换 -->
-      <!-- 如：<wd-icon name="home" /> (https://wot-design-uni.cn/component/icon.html) -->
-      <!-- 如：<uv-icon name="home" /> (https://www.uvui.cn/components/icon.html) -->
-      <!-- 如：<sar-icon name="image" /> (https://sard.wzt.zone/sard-uniapp-docs/components/icon)(sar没有home图标^_^) -->
-      <!-- <wd-icon :name="item.icon" size="20" /> -->
+    
+    <!-- iconfont -->
+    <template v-if="item.iconType === 'iconfont'">
+      <view :class="[active ? item.iconActive : item.icon, isBulge ? 'text-80px' : 'text-55rpx']" />
     </template>
-    <template v-if="item.iconType === 'unocss' || item.iconType === 'iconfont'">
-      <view :class="[item.icon, isBulge ? 'text-80px' : 'text-20px']" />
-    </template>
-    <template v-if="item.iconType === 'image'">
-      <image :src="getImageByIndex(index, item)" mode="scaleToFill" :class="isBulge ? 'h-80px w-80px' : 'h-24px w-24px'" />
-    </template>
-    <view v-if="!isBulge" class="mt-2px text-12px">
+
+    <!-- 文字显示 -->
+    <view v-if="!isBulge" class="tabbar-item-text text-35rpx">
       {{ getI18nText(item.text) }}
     </view>
+
     <!-- 角标显示 -->
     <view v-if="item.badge">
       <template v-if="item.badge === 'dot'">
@@ -49,3 +24,25 @@ function getImageByIndex(index: number, item: CustomTabBarItem) {
     </view>
   </view>
 </template>
+
+
+<script setup lang="ts">
+import type { CustomTabBarItem } from './types'
+import { getI18nText } from './i18n'
+import { tabbarStore } from './store'
+
+defineProps<{
+  item: CustomTabBarItem
+  index: number
+  isBulge?: boolean
+  active: boolean
+}>()
+
+function getImageByIndex(index: number, item: CustomTabBarItem) {
+  if (!item.iconActive) {
+    console.warn('image 模式下，需要配置 iconActive (高亮时的图片），否则无法切换高亮图片')
+    return item.icon
+  }
+  return tabbarStore.curIdx === index ? item.iconActive : item.icon
+}
+</script>
