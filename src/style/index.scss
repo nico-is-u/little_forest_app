@@ -2,13 +2,21 @@
 
 :root,
 page {
+
+  --pc-max-width: 780rpx; /* pc端最大宽度 */
+
   --app-bg-color: #f8faf8; /* app背景色 */
   --app-border-color:#e5e7eb; /* app边框色 */
 
   --app-primary-color: #047857b3; /* app主色 */
+  --app-primary-color2: #1b9d6e;  /* app主色2 */
   --app-secondary-color: #d1fae5; /* app次级色 */
 
   --app-text-color2: #006947; /* app文字颜色 */
+  --app-text-block-color: #191c1b; /* app文字颜色 */
+  --app-text-gray-color: #3d4a42; /* app文字灰色 */
+
+  --app-icon-dark-color:#6d7a72; /* app图标暗色 */
 
 
   // 修改按主题色
@@ -30,10 +38,18 @@ page {
 }
 
 
-.test {
-  // 可以通过 @apply 多个样式封装整体样式
-  @apply mt-4 ml-4;
+/* 关于uniapp的样式重置 */
+uni-page-body {
+  height: 100%;
+}
 
-  padding-top: 4px;
-  color: red;
+#app-layout{
+  // color: var(--app-text-color);
+  min-height: 100%;
+  background-color: var(--app-bg-color);
+}
+
+/* 布局容器 */
+.section{
+  padding: 0 38rpx;
 }

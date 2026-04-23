@@ -21,11 +21,11 @@
   "description": "unibest - 最好的 uniapp 开发模板",
   "generate-time": "用户创建项目时生成",
   "author": {
-    "name": "feige996",
-    "zhName": "菲鸽",
-    "email": "1020103647@qq.com",
-    "github": "https://github.com/feige996",
-    "gitee": "https://gitee.com/feige996"
+    "name": "nico_is_u",
+    "zhName": "nico",
+    "email": "308878328@qq.com",
+    "github": "",
+    "gitee": ""
   },
   "license": "MIT",
   "homepage": "https://unibest.tech",
@@ -117,6 +117,7 @@
     "@alova/adapter-uniapp": "^2.0.14",
     "@alova/shared": "^1.3.1",
     "@changesets/cli": "^2.30.0",
+    "@climblee/uv-ui": "^1.1.20",
     "@dcloudio/uni-app": "3.0.0-4070620250821001",
     "@dcloudio/uni-app-harmony": "3.0.0-4070620250821001",
     "@dcloudio/uni-app-plus": "3.0.0-4070620250821001",
@@ -141,8 +142,7 @@
     "vue": "^3.4.21",
     "vue-i18n": "9.1.9",
     "vue-router": "4.5.1",
-    "z-paging": "2.8.7",
-    "@climblee/uv-ui": "latest"
+    "z-paging": "2.8.7"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",

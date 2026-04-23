@@ -1,6 +1,6 @@
 <template>
   <view v-if="customTabbarEnable" class="border-and-fixed" @touchmove.stop.prevent>
-    <view id="app-tabbar"  class="flex items-center bg-white">
+    <view id="app-tabbar"  class="flex justify-center bg-white">
       <view v-for="(item, index) in tabbarList" :key="'tabbar-item-' + index"
         class="flex flex-col items-center justify-center flex-none" :class="tabbarStore.curIdx === index ? 'app-tabbar-item app-tabbar-item-active' : 'app-tabbar-item'"
         @click="handleClick(index)"
@@ -108,6 +108,9 @@ onShow(() => {
   right: 0;
   z-index: 1000;
   box-sizing: border-box;
+
+  display: flex;
+  justify-content: center;
 }
 
 .bg-white{
@@ -115,13 +118,16 @@ onShow(() => {
 }
 
 #app-tabbar{
-  height: 250rpx;
+  width: 92%;
+  height: 210rpx;
   border-top-left-radius: 100rpx;
   border-top-right-radius: 100rpx;
   box-shadow: 0px -8rpx 40rpx rgba(0, 0, 0, 0.02);
   border: 1rpx solid var(--app-border-color);
 
-  padding-left: 50rpx;
+  padding-top: 50rpx;
+  padding-left: 25rpx;
+  padding-right: 25rpx;
 }
 
 .app-tabbar-item{
@@ -132,6 +138,8 @@ onShow(() => {
   color: var(--app-text-color2);
   font-family:sans-serif;
   font-weight: 500;
+
+  margin-left: 2rpx;
 
   &.app-tabbar-item-active{
     background-color: var(--app-secondary-color);

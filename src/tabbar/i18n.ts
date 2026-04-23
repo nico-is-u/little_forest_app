@@ -10,7 +10,7 @@ export function getI18nText(key: string) {
   if (match) {
     key = match[1]
   }
-  console.log('设置多语言：', key)
+  // console.log('设置多语言：', key)
   return t(key)
 }
 

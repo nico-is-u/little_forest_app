@@ -10,7 +10,7 @@ const userInfoState: IUserInfoRes = {
   userId: -1,
   username: '',
   nickname: '',
-  avatar: '/static/images/default-avatar.png',
+  avatar: '',     // 默认头像，没有就是没有，根据性别设置默认头像
 }
 
 export const useUserStore = defineStore(
@@ -21,10 +21,6 @@ export const useUserStore = defineStore(
     // 设置用户信息
     const setUserInfo = (val: IUserInfoRes) => {
       console.log('设置用户信息', val)
-      // 若头像为空 则使用默认头像
-      if (!val.avatar) {
-        val.avatar = userInfoState.avatar
-      }
       userInfo.value = val
     }
     const setUserAvatar = (avatar: string) => {

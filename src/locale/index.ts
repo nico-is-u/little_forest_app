@@ -25,7 +25,7 @@ export function getTemplateByKey(key: string) {
     return ''
   }
   const locale = uni.getLocale()
-  console.log('locale:', locale)
+  // console.log('locale:', locale)
 
   const message = messages[locale] // 拿到某个多语言的所有模板（是一个对象)
   if (Object.keys(message).includes(key)) {

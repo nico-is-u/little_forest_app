@@ -1,20 +1,26 @@
 <template>
-  <view class="bg-white px-4 pt-safe">
+  <view id="page-index">
+    <say-hi />
   </view>
 </template>
 
 
 <script lang="ts" setup>
+/* 自定义组件 */
+import SayHi from '@/components/say_hi/index.vue'
+
+
 defineOptions({
   name: 'Home',
 })
 definePage({
-  // 使用 type: "home" 属性设置首页，其他页面不需要设置，默认为page
   type: 'home',
   style: {
-    // 'custom' 表示开启自定义导航栏，默认 'default'
     navigationStyle: 'custom',
   },
 })
 </script>
 
+<style lang="scss" scoped>
+
+</style>
