@@ -89,7 +89,7 @@ export const navigateToInterceptor = {
     if (Object.keys(myQuery).length) {
       fullPath += `?${Object.keys(myQuery).map(key => `${key}=${myQuery[key]}`).join('&')}`
     }
-    const redirectUrl = `${LOGIN_PAGE}?redirect=${encodeURIComponent(fullPath)}`
+    const redirectUrl = `${LOGIN_PAGE}?redirect=${encodeURIComponent(fullPath)}&remind=1`
 
     // #region 1/2 默认需要登录的情况(白名单策略) ---------------------------
     if (isNeedLoginMode) {

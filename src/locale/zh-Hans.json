@@ -1,13 +1,32 @@
 {
+  "app":{
+    "name": "小森邻",
+    "slogan1": "温暖邻里·贴心相伴",
+
+    "get":"获取",
+    "asap":"立即",
+    "login":"登录",
+    "register":"注册"
+  },
+
   "tabbar.home": "首页",
   "tabbar.delivery": "快递",
   "tabbar.group.buying": "团购",
   "tabbar.travelling":"助行",
   "tabbar.mine": "我的",
 
-  "tabbar.i18n": "多语言",
-  "alova.title": "Alova 请求",
-  "weight": "{heavy}公斤",
-  "detail": "{0}cm, {1}公斤",
-  "introduction": "我是 {name},身高:{detail.height},体重:{detail.weight}"
+  "user": {
+    "login": {
+      "remind": "请先登录哦~"
+    }
+  },
+
+  "form":{
+    "enter": "请输入",
+    "correct":"正确的",
+    "phone": "手机号",
+    "verifyCode": "验证码",
+
+    "otherLoginFunc":"第三方快捷登录"
+  }
 }

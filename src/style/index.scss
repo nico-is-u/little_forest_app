@@ -10,11 +10,16 @@ page {
 
   --app-primary-color: #047857b3; /* app主色 */
   --app-primary-color2: #1b9d6e;  /* app主色2 */
+  --app-primary-color3: #c6e7d8;  /* app主色3 (薄荷绿) */
   --app-secondary-color: #d1fae5; /* app次级色 */
 
   --app-text-color2: #006947; /* app文字颜色 */
-  --app-text-block-color: #191c1b; /* app文字颜色 */
+  --app-text-color3: #4b695d; /* app文字颜色2 */
+  --app-text-dark-color2:#476459; /* app文字暗色 */
+  --app-text-block-color: #191c1b; /* app文字黑色 */
   --app-text-gray-color: #3d4a42; /* app文字灰色 */
+
+  --app-input-placeholder:#47645999;  /* app输入框占位文字颜色 */
 
   --app-icon-dark-color:#6d7a72; /* app图标暗色 */
 
@@ -45,8 +50,18 @@ uni-page-body {
 
 #app-layout{
   // color: var(--app-text-color);
-  min-height: 100%;
+  height: 100%;
   background-color: var(--app-bg-color);
+
+  /* 无滚动等高容器 */
+  .app-page{
+    box-sizing: border-box;
+  }
+
+  .app-scroll-page{
+    box-sizing: border-box;
+  }
+
 }
 
 /* 布局容器 */

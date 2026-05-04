@@ -69,7 +69,6 @@
 /* 自定义组件 */
 import UserinfoCard from '@/components/userinfo_card/index.vue'
 
-
 defineOptions({
   name: 'MineIndex',
 })
@@ -78,6 +77,7 @@ definePage({
     navigationStyle: 'custom',
   },
 })
+
 </script>
 
 <style lang="scss" scoped>

@@ -17,7 +17,9 @@ export function getI18nText(key: string) {
 export function setTabbarItem() {
 // 只有使用原生Tabbar才需要 setTabbarItem
 // 而且只有当前页是tabbar页才能设置
-  console.log('设置多语言：setTabBarItem', isNativeTabbar, isCurrentPageTabbar())
+  
+// console.log('设置多语言：setTabBarItem', isNativeTabbar, isCurrentPageTabbar())
+
   if (isNativeTabbar && isCurrentPageTabbar()) {
     tabbarList.forEach((item, index) => {
       uni.setTabBarItem({

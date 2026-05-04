@@ -27,6 +27,33 @@ onShow((options) => {
   font-size: 28rpx;
   font-family: sans-serif;
 
+  /***************** 其他工具 *****************/
+  .heng-dash{
+    width: 90rpx;
+    height: 2rpx;
+    background-color: rgba(188,202,192,.3);
+    margin: 0 30rpx;
+  }
+
+  /**************** flex分栏工具 ****************/
+  .flex-row{
+    display: flex;
+    align-items: center;
+
+    gap: 32rpx;
+
+    .flex-40{
+      width: 40%;
+    }
+    .flex-50{
+      width: 50%;
+    }
+    .flex-60{
+      width: 60%;
+    }
+    
+  }
+
   /**************** 按钮工具 ****************/
   .uv-circle-button{
     .uv-button.uv-button--square{
@@ -187,6 +214,114 @@ onShow((options) => {
     }
 
   }
+
+
+  /**************** 表单部分 ****************/
+  .form-group{
+
+    display: flex;
+    flex-direction: column;
+    gap: 28rpx;
+
+    .form-control{
+      box-sizing: content-box;
+
+      min-height: 120rpx;
+      background-color: white;
+
+      border-radius: 50rpx;
+      border-width: 4rpx;
+      border-style: solid;
+      border-color: #bccac04d;
+      box-shadow: 0 2rpx 4rpx 0 rgb(0 0 0 / 0.05);
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+
+      .label{
+        width: 100rpx;
+        flex-shrink: 0;
+        padding-top: 3rpx;
+        .app-iconfont{
+          font-size: 50rpx;
+          color: var(--app-icon-dark-color);
+        }
+      }
+
+      .form-content{
+        flex-grow: 1;
+        padding: 0 60rpx;
+
+        input{
+          font-size: 38rpx;
+          font-weight: 500;
+          .input-placeholder{
+            color: var(--app-input-placeholder);
+          }
+        }
+      }
+
+      &.form-control-border{
+        border-width: 4rpx;
+        border-color: var(--app-text-color2);
+      }
+
+    }
+  }
+
+  /**************** 按钮部分 ****************/
+  .app-btn{
+    min-height: 120rpx;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-weight: 500;
+    color: var(--app-text-color3);
+    background-color: var(--app-primary-color3);
+
+    &.app-btn-circle{
+      border-radius: 60rpx;
+    }
+
+    &.button-hover{
+      transform: scale(.97);
+    }
+
+    &::after{
+      border: none;
+    }
+
+
+  }
+
+  .app-btn2{
+    min-height: 120rpx;
+    
+    color: white;
+    background-color: var(--app-text-color2);
+    box-shadow: 0px 24rpx 80rpx rgba(0, 105, 71, 0.25);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.app-btn-circle{
+      border-radius: 60rpx;
+    }
+
+    &.button-hover{
+      transform: scale(.97);
+    }
+
+    &::after{
+      border: none;
+    }
+  }
+
 
 }
 </style>
