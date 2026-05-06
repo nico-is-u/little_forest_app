@@ -12,7 +12,8 @@ export default function useToast(options:toast) {
 
     const _options = <any>{
         title: '',
-        icon: 'none'
+        icon: 'none',
+        position: 'bottom',
     }
 
     if(typeof options === 'string') {

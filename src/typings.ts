@@ -1,4 +1,13 @@
-// 枚举定义
+import { ComponentCustomProperties } from 'vue'
+
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
+    $goHref: (url: any, func?: string, options?: object) => void
+  }
+}
+
+
+
 
 export enum TestEnum {
   A = '1',

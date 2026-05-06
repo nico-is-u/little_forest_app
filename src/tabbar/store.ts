@@ -50,6 +50,13 @@ const tabbarStore = reactive({
     this.curIdx = idx
     uni.setStorageSync('app-tabbar-index', idx)
   },
+  
+  confirmCurIdex(idx: number) {
+    if (this.curIdx !== idx){
+      this.curIdx = idx
+    }
+  },
+
   setTabbarItemBadge(idx: number, badge: CustomTabBarItemBadge) {
     const list = tabbarList.value
     if (list[idx]) {

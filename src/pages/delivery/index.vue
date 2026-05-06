@@ -3,9 +3,17 @@
 </template>
 
 <script lang="ts" setup>
+import { tabbarStore } from '../../tabbar/store'
+
+/**
+ * @确认tabbar的高亮是否正确
+ */
+onShow(() => tabbarStore.confirmCurIdex(1))
+
 defineOptions({
   name: 'DeliveryIndex',
 })
+
 definePage({
   style: {
     navigationStyle: 'custom',

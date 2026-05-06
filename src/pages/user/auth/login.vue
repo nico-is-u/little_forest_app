@@ -1,5 +1,12 @@
 <template>
 <view id="page-login" class="app-scroll-page">
+
+    <!-- 返回按钮 -->
+    <view class="back-btn-box" @click="$goHref('back')">
+        <view class="back-btn-bg"></view>
+        <image class="back-btn-icon" src="@/static/images/back-icon.png" mode="widthFix"></image>
+    </view>
+
     <!-- LOGO区域 -->
     <view class="logo-box">
         <!-- <image src="@/static/images/logo-text.png" mode="widthFix"></image> -->
@@ -37,7 +44,7 @@
             </view>
           </view>
           <view class="flex-40">
-            <button class="app-btn app-btn-circle">{{t('app.get') + t('form.verifyCode')}}</button>
+            <button class="app-btn app-btn-circle" @click="getSmsCode">{{t('app.get') + t('form.verifyCode')}}</button>
           </view>
         </view>
       </view>
@@ -74,10 +81,11 @@
 
 <script lang="ts" setup>
 /******  (一般来说提供给H5和App的）登录页 ******/
-import { t } from '@/locale/index'
-import useToast from '@/hooks/useToast'
 import { nextTick,onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { t } from '@/locale/index'
+import useToast from '@/hooks/useToast'
+import { getSmsCode as $http1 } from '@/api/common'
 
 /******* Datas *******/
 const focusId = ref('')               /* 当前获得焦点的表单ID */
@@ -85,7 +93,7 @@ const $toast = ref<any>(null)         /* 提示组件实例 */
 const $route = useRoute()             /* 路由实例 */
 
 const formData = reactive({
-  phone: '',          /* 手机号 */
+  phone: '18200000001',          /* 手机号 */
   verifyCode: '',     /* 验证码 */
 })
 
@@ -148,7 +156,20 @@ const submitCheck = () => {
 
 /* 获取短信验证码 */
 const getSmsCode = () => {
+  /* 手机号没输入 */
+  if (!formData.phone) {
+    useToast(t('form.enter') + t('form.phone'))
+    formGetFocus('phone')
+    return
+  /* 手机号不合法 */
+  } else if(/^1[3-9]\d{9}$/.test(formData.phone) == false){
+    useToast(t('form.enter') + t('form.correct') + t('form.phone'))
+    formGetFocus('phone')
+    return
+  }
+
   
+  $http1({phone:parseInt(formData.phone)})
 }
 
 /*********  生命周期 ***********/
@@ -172,13 +193,47 @@ definePage({
 
 <style lang="scss" scoped>
 #page-login{
-    padding-top: 200rpx;
     padding-bottom: 280rpx;
-    
     background-image: linear-gradient(to bottom, #f5fff6 , #f8faf8 , #f8faf8);
 
+    .back-btn-box{
+
+      height: 100rpx;
+      top: 0;
+      left: 0;
+
+      .back-btn-bg{
+        width: 150rpx;
+        height: 150rpx;
+        background-color: var(--app-green-color);
+        transform: rotate(115deg) translateX(-30%) translateY(15%);
+
+        position: absolute;
+        z-index: 1;
+      }
+
+      .back-btn-icon{
+        position: relative;
+        z-index: 2;
+        
+        width: 80rpx;
+
+        margin-top: 20rpx;
+        margin-left: 28rpx;
+      }
+
+      &:active{
+        .back-btn-bg{
+          background-color: var(--app-primary-color3);
+        }
+      }
+
+    }
+
     .logo-box{
+
         width: 100%;
+        padding-top: 100rpx;
 
         .h1{
           height: auto;
