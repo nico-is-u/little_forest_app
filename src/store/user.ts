@@ -1,57 +1,68 @@
-import type { IUserInfoRes } from '@/api/types/login'
+import { userInfoState } from './type/user'
+import { ref,computed } from 'vue'
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
-import {
-  getUserInfo,
-} from '@/api/login'
 
-// 初始化状态
-const userInfoState: IUserInfoRes = {
-  userId: -1,
-  username: '',
-  nickname: '',
-  avatar: '',     // 默认头像，没有就是没有，根据性别设置默认头像
-}
+import { getUserInfo as _getUserInfo } from '@/api/users'
 
 export const useUserStore = defineStore(
   'user',
   () => {
-    // 定义用户信息
-    const userInfo = ref<IUserInfoRes>({ ...userInfoState })
-    // 设置用户信息
-    const setUserInfo = (val: IUserInfoRes) => {
-      console.log('设置用户信息', val)
-      userInfo.value = val
-    }
-    const setUserAvatar = (avatar: string) => {
-      userInfo.value.avatar = avatar
-      console.log('设置用户头像', avatar)
-      console.log('userInfo', userInfo.value)
-    }
-    // 删除用户信息
-    const clearUserInfo = () => {
-      userInfo.value = { ...userInfoState }
-      uni.removeStorageSync('user')
-    }
 
     /**
-     * 获取用户信息
+     * @states
      */
-    const fetchUserInfo = async () => {
-      const res = await getUserInfo()
-      setUserInfo(res)
-      return res
+
+    /* 定义用户信息 */
+    const userInfo = ref({ ...userInfoState })
+    const userToken = ref('')
+
+    /**
+     * @getters
+     */
+
+    /* 认证状态判断 */
+    const hasValidLogin = computed(() => userInfo.value.userId !== -1)
+
+    /**
+     * @actions
+     */
+    const getUserInfo = async () => {
+      try{
+        const response = await _getUserInfo()
+        const {code = 0 , data = {} as any} = response
+        /* 缓存用户信息 便于持久化 */
+        if(code == 1){
+          uni.setStorage({
+            key:'app-user-info',
+            data
+          })
+
+          userInfo.value = data
+          
+        }
+        return response
+      }catch(e){
+        throw e
+      }
     }
 
-    return {
-      userInfo,
-      clearUserInfo,
-      fetchUserInfo,
-      setUserInfo,
-      setUserAvatar,
+    const setUserToken = (token: string) => {
+      /* 缓存token */
+      uni.setStorageSync('app-user-token', token)
+      userToken.value = token
     }
-  },
-  {
-    persist: true,
-  },
+
+
+    return {
+      /* states */
+      userInfo,
+      userToken,
+      /* getters */
+      hasLogin: hasValidLogin,
+      /* actions */
+      getUserInfo,
+      setUserToken,
+    }
+
+  }
 )

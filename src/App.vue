@@ -1,8 +1,17 @@
 <script setup lang="ts">
 import { onHide, onLaunch, onShow } from '@dcloudio/uni-app'
+import { useUserStore } from '@/store/user'
 import { navigateToInterceptor } from '@/router/interceptor'
 
-/* onLaunch((options) => {}) */
+onLaunch((options) => {
+  const userToken = uni.getStorageSync('app-user-token')
+  if (userToken) {
+    const userStore = useUserStore()
+    userStore.setUserToken(userToken)
+    /* 在这里异步更新一次用户信息，确保用户信息是最新的（如果401则也从这里弹出） */
+    userStore.getUserInfo()
+  }
+})
 
 onShow((options) => {
   // 处理直接进入页面路由的情况：如h5直接输入路由、微信小程序分享后进入等 （https://github.com/unibest-tech/unibest/issues/192）
@@ -295,7 +304,6 @@ onShow((options) => {
       border: none;
     }
 
-
   }
 
   .app-btn2{
@@ -320,6 +328,12 @@ onShow((options) => {
     &::after{
       border: none;
     }
+
+    &[disabled]{
+      background-color: var(--app-btn-dark-color);
+      box-shadow: none;
+    }
+
   }
 
 

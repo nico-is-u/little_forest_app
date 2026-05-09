@@ -3,6 +3,8 @@
     "name": "小森邻",
     "slogan1": "温暖邻里·贴心相伴",
 
+    "httpLoading":"请等待...",
+
     "get":"获取",
     "asap":"立即",
     "login":"登录",

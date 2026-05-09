@@ -1,7 +1,7 @@
 import type { IDoubleTokenRes } from '@/api/types/login'
 import type { CustomRequestOptions, IResponse } from '@/http/types'
 import { nextTick } from 'vue'
-import { useTokenStore } from '@/store/token'
+// import { useTokenStore } from '@/store/token'
 import { isDoubleTokenMode } from '@/utils'
 import { toLoginPage } from '@/utils/toLoginPage'
 import { ResultEnum } from './tools/enum'
@@ -27,82 +27,101 @@ export function http<T>(options: CustomRequestOptions) {
         // 检查是否是401错误（包括HTTP状态码401或业务码401）
         const isTokenExpired = res.statusCode === 401 || code === 401
 
-        if (isTokenExpired) {
-          const tokenStore = useTokenStore()
-          if (!isDoubleTokenMode) {
-            // 未启用双token策略，清理用户信息，跳转到登录页
-            tokenStore.logout()
-            toLoginPage()
-            return reject(res)
-          }
+        // if (isTokenExpired) {
+        //   const tokenStore = useTokenStore()
+        //   if (!isDoubleTokenMode) {
+        //     // 未启用双token策略，清理用户信息，跳转到登录页
+        //     tokenStore.logout()
+        //     toLoginPage()
+        //     return reject(res)
+        //   }
 
-          /* -------- 无感刷新 token ----------- */
-          const { refreshToken } = tokenStore.tokenInfo as IDoubleTokenRes || {}
-          // token 失效的，且有刷新 token 的，才放到请求队列里
-          if (refreshToken) {
-            taskQueue.push(() => {
-              resolve(http<T>(options))
-            })
-          }
+        //   /* -------- 无感刷新 token ----------- */
+        //   const { refreshToken } = tokenStore.tokenInfo as IDoubleTokenRes || {}
+        //   // token 失效的，且有刷新 token 的，才放到请求队列里
+        //   if (refreshToken) {
+        //     taskQueue.push(() => {
+        //       resolve(http<T>(options))
+        //     })
+        //   }
 
-          // 如果有 refreshToken 且未在刷新中，发起刷新 token 请求
-          if (refreshToken && !refreshing) {
-            refreshing = true
-            try {
-              // 发起刷新 token 请求（使用 store 的 refreshToken 方法）
-              await tokenStore.refreshToken()
-              // 刷新 token 成功
-              refreshing = false
-              nextTick(() => {
-                // 关闭其他弹窗
-                uni.hideToast()
-                uni.showToast({
-                  title: 'token 刷新成功',
-                  icon: 'none',
-                })
-              })
-              // 将任务队列的所有任务重新请求
-              taskQueue.forEach(task => task())
-            }
-            catch (refreshErr) {
-              console.error('刷新 token 失败:', refreshErr)
-              refreshing = false
-              // 刷新 token 失败，跳转到登录页
-              nextTick(() => {
-                // 关闭其他弹窗
-                uni.hideToast()
-                uni.showToast({
-                  title: '登录已过期，请重新登录',
-                  icon: 'none',
-                })
-              })
-              // 清除用户信息
-              await tokenStore.logout()
-              // 跳转到登录页
-              setTimeout(() => {
-                toLoginPage()
-              }, 2000)
-            }
-            finally {
-              // 不管刷新 token 成功与否，都清空任务队列
-              taskQueue = []
-            }
-          }
+        //   // 如果有 refreshToken 且未在刷新中，发起刷新 token 请求
+        //   if (refreshToken && !refreshing) {
+        //     refreshing = true
+        //     try {
+        //       // 发起刷新 token 请求（使用 store 的 refreshToken 方法）
+        //       await tokenStore.refreshToken()
+        //       // 刷新 token 成功
+        //       refreshing = false
+        //       nextTick(() => {
+        //         // 关闭其他弹窗
+        //         uni.hideToast()
+        //         uni.showToast({
+        //           title: 'token 刷新成功',
+        //           icon: 'none',
+        //         })
+        //       })
+        //       // 将任务队列的所有任务重新请求
+        //       taskQueue.forEach(task => task())
+        //     }
+        //     catch (refreshErr) {
+        //       console.error('刷新 token 失败:', refreshErr)
+        //       refreshing = false
+        //       // 刷新 token 失败，跳转到登录页
+        //       nextTick(() => {
+        //         // 关闭其他弹窗
+        //         uni.hideToast()
+        //         uni.showToast({
+        //           title: '登录已过期，请重新登录',
+        //           icon: 'none',
+        //         })
+        //       })
+        //       // 清除用户信息
+        //       await tokenStore.logout()
+        //       // 跳转到登录页
+        //       setTimeout(() => {
+        //         toLoginPage()
+        //       }, 2000)
+        //     }
+        //     finally {
+        //       // 不管刷新 token 成功与否，都清空任务队列
+        //       taskQueue = []
+        //     }
+        //   }
 
-          return reject(res)
-        }
+        //   return reject(res)
+        // }
 
         // 处理其他成功状态（HTTP状态码200-299）
         if (res.statusCode >= 200 && res.statusCode < 300) {
           // 处理业务逻辑错误
-          if (code !== ResultEnum.Success0 && code !== ResultEnum.Success200) {
-            uni.showToast({
-              icon: 'none',
-              title: responseData.msg || responseData.message || '请求错误',
-            })
-            return reject(responseData.data)
+          if (code !== ResultEnum.Success0) {
+
+            let toastMsg = ''
+
+            // 触发节流器
+            if (code == ResultEnum.Throttle){
+              toastMsg = '您的请求过于频繁，请稍后再试'
+            }
+            // 其余一般错误
+            else{
+              toastMsg = responseData.msg || responseData.message || '请求错误'
+            }
+
+            /* 统一打印提示, 抛出错误 */
+            uni.showToast({icon: 'none',title: toastMsg})
+            return reject(responseData)
+
           }
-          return resolve(responseData.data)
+
+          /* 正常放行响应，到页面页再做处理 */
+          return resolve(responseData as any)
+        }
+        
+        /* 触发节流器 */
+        else if(res.statusCode == ResultEnum.Throttle){
+          uni.showToast({icon: 'none',title: '操作过于频繁，请稍后再试'})
+          return resolve(responseData as any)
         }
 
         // 处理其他错误

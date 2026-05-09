@@ -1,6 +1,6 @@
 export enum ResultEnum {
   // 0和200当做成功都很普遍，这里直接兼容两者（PS：0和200通常都不会当做错误码，但是有的接口会返回0，有的接口会返回200）
-  Success0 = 0, // 成功
+  Success0 = 1, // 成功
   Success200 = 200, // 成功
   Error = 400, // 错误
   Unauthorized = 401, // 未授权
@@ -8,6 +8,9 @@ export enum ResultEnum {
   NotFound = 404, // 未找到（原为notFound）
   MethodNotAllowed = 405, // 方法不允许（原为methodNotAllowed）
   RequestTimeout = 408, // 请求超时（原为requestTimeout）
+
+  Throttle = 429, // 触发节流器
+
   InternalServerError = 500, // 服务器错误（原为internalServerError）
   NotImplemented = 501, // 未实现（原为notImplemented）
   BadGateway = 502, // 网关错误（原为badGateway）

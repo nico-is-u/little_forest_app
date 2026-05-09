@@ -51,7 +51,12 @@
 
       <!-- 立即登录/注册 -->
       <view class="btn-group mt-12">
-        <button class="app-btn2 app-btn-circle" @click="submitCheck">{{ t("app.asap") + t("app.login") + '/' + t("app.register") }}</button>
+        <button 
+          class="app-btn2 app-btn-circle"
+          :disabled="httpLoading"
+          :loading="httpLoading"
+          v-text="btnText"
+          @click="submitCheck"></button>
         
         <!-- 底部说明 -->
         <view class="tips-group mt-12">
@@ -84,21 +89,32 @@
 import { nextTick,onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { t } from '@/locale/index'
+
 import useToast from '@/hooks/useToast'
+import $goHref from '@/utils/goHref'
+import { useUserStore } from '@/store/user'
 import { getSmsCode as $http1 } from '@/api/common'
+import { userLogin as $http2 } from '@/api/users'
 
 /******* Datas *******/
 const focusId = ref('')               /* 当前获得焦点的表单ID */
 const $toast = ref<any>(null)         /* 提示组件实例 */
 const $route = useRoute()             /* 路由实例 */
+const userStore = useUserStore()      /* 用户信息状态管理实例 */
+const httpLoading = ref(false)        /* 请求等待 */
 
 const formData = reactive({
   phone: '18200000001',          /* 手机号 */
-  verifyCode: '',     /* 验证码 */
+  verifyCode: '6666',     /* 验证码 */
 })
 
 const formFocusPhone = ref(false)
 const formFocusVerifyCode = ref(false)
+
+/******* Computed ********/
+const btnText = computed(() => {
+  return httpLoading.value ? t("app.httpLoading") : t("app.asap") + t("app.login") + '/' + t("app.register")
+})
 
 /******* Methods *******/
 
@@ -119,6 +135,27 @@ const formLoseFocus = (id: string) => {
     nextTick(() => formFocusPhone.value = false)
   if (id == 'verify-code')
     nextTick(() => formFocusVerifyCode.value = false)
+}
+
+/* 提交登录/注册请求 */
+const goRequest = async () => {
+  httpLoading.value = true
+  try{
+    const response = await $http2(formData)
+    const {code = 0,data=''} = response as {code:number,data:string}
+    if(code == 1){
+      userStore.setUserToken(data)
+      /* 继续请求用户信息 */
+      await userStore.getUserInfo()
+      /* 登录成功 */
+      //$goHref('/pages/index?remind=1','')
+    }
+  }catch(e){
+    console.log('???')
+    /* 错误不在这里抛出 */
+    httpLoading.value = false
+  }
+  
 }
 
 /* 表单验证 */
@@ -150,12 +187,12 @@ const submitCheck = () => {
 
   /* 所有验证通过 */
   else{
-    useToast('验证通过，提交登录/注册')
+    goRequest()
   }
 }
 
 /* 获取短信验证码 */
-const getSmsCode = () => {
+const getSmsCode = async () => {
   /* 手机号没输入 */
   if (!formData.phone) {
     useToast(t('form.enter') + t('form.phone'))
@@ -168,8 +205,13 @@ const getSmsCode = () => {
     return
   }
 
-  
-  $http1({phone:parseInt(formData.phone)})
+  const response = await $http1({phone:parseInt(formData.phone)})
+  const {code = 0,msg=''} = response
+  if(code == 1){
+    useToast(msg)
+  }
+
+
 }
 
 /*********  生命周期 ***********/
@@ -177,7 +219,6 @@ onMounted(() => {
   const {remind = 0} = $route.query as any
   if(remind == 1)
     useToast(t('user.login.remind'))
-  
 })
 
 /*********  页面设置 ***********/
