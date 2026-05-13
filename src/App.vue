@@ -9,6 +9,8 @@ onLaunch((options) => {
     const userStore = useUserStore()
     userStore.setUserToken(userToken)
     /* 在这里异步更新一次用户信息，确保用户信息是最新的（如果401则也从这里弹出） */
+    const userInfo = uni.getStorageSync('app-user-info')
+    userStore.setUserInfo(userInfo)
     userStore.getUserInfo()
   }
 })

@@ -26,6 +26,8 @@ export const useUserStore = defineStore(
     /**
      * @actions
      */
+    const setUserInfo = (info: typeof userInfoState) => userInfo.value = info
+
     const getUserInfo = async () => {
       try{
         const response = await _getUserInfo()
@@ -37,8 +39,8 @@ export const useUserStore = defineStore(
             data
           })
 
-          userInfo.value = data
-          
+          setUserInfo(data)
+
         }
         return response
       }catch(e){
@@ -60,6 +62,7 @@ export const useUserStore = defineStore(
       /* getters */
       hasLogin: hasValidLogin,
       /* actions */
+      setUserInfo,
       getUserInfo,
       setUserToken,
     }
