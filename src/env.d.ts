@@ -15,6 +15,8 @@ interface ImportMetaEnv {
   readonly VITE_SERVER_PORT: string
   /** 后台接口地址 */
   readonly VITE_SERVER_BASEURL: string
+  /** 资源地址 */
+  readonly VITE_ASSETS_BASEURL: string
   /** H5是否需要代理 */
   readonly VITE_APP_PROXY_ENABLE: 'true' | 'false'
   /** H5是否需要代理，需要的话有个前缀 */

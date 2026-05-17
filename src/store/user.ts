@@ -38,7 +38,7 @@ export const useUserStore = defineStore(
             key:'app-user-info',
             data
           })
-
+          
           setUserInfo(data)
 
         }
@@ -54,6 +54,13 @@ export const useUserStore = defineStore(
       userToken.value = token
     }
 
+    const userLogout = () => {
+      /* 清除用户信息 */
+      uni.removeStorageSync('app-user-info')
+      uni.removeStorageSync('app-user-token')
+      userInfo.value = { ...userInfoState }
+      userToken.value = ''
+    }
 
     return {
       /* states */
@@ -65,6 +72,7 @@ export const useUserStore = defineStore(
       setUserInfo,
       getUserInfo,
       setUserToken,
+      userLogout,
     }
 
   }

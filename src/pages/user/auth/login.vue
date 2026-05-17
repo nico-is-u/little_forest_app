@@ -2,7 +2,7 @@
 <view id="page-login" class="app-scroll-page">
 
     <!-- 返回按钮 -->
-    <view class="back-btn-box" @click="$goHref('back')">
+    <view class="back-btn-box" @click="$goHref('/pages/index/index','tab')">
         <view class="back-btn-bg"></view>
         <image class="back-btn-icon" src="@/static/images/back-icon.png" mode="widthFix"></image>
     </view>
@@ -16,7 +16,6 @@
           <view class="like-hr"></view>
         </view>
     </view>
-
 
     <!-- 表单区域 -->
     <view class="section mt-12">
@@ -44,7 +43,7 @@
             </view>
           </view>
           <view class="flex-40">
-            <button class="app-btn app-btn-circle" @click="getSmsCode">{{t('app.get') + t('form.verifyCode')}}</button>
+            <button class="app-btn circle-1" @click="getSmsCode">{{t('app.get') + t('form.verifyCode')}}</button>
           </view>
         </view>
       </view>
@@ -52,7 +51,7 @@
       <!-- 立即登录/注册 -->
       <view class="btn-group mt-12">
         <button 
-          class="app-btn2 app-btn-circle"
+          class="app-btn app-btn-primary circle-1"
           :disabled="httpLoading"
           :loading="httpLoading"
           v-text="btnText"
@@ -85,7 +84,7 @@
 </template>
 
 <script lang="ts" setup>
-/******  (一般来说提供给H5和App的）登录页 ******/
+/******  @page (一般来说提供给H5和App的）登录页 ******/
 import { nextTick,onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { t } from '@/locale/index'
@@ -148,7 +147,7 @@ const goRequest = async () => {
       /* 继续请求用户信息 */
       await userStore.getUserInfo()
       /* 登录成功 */
-      //$goHref('/pages/index?remind=1','')
+      $goHref('/pages/index/index?remind=1','tab')
     }
   }catch(e){
     console.log('???')
@@ -306,13 +305,14 @@ definePage({
 
 .app-scroll-page{
 
-  .app-btn2{
+  /* 确定按钮 */
+  .app-btn-primary{
 
     height: 140rpx;
     font-size: 40rpx;
     font-weight: bold;
 
-    &.app-btn-circle{
+    &.circle-1{
       border-radius: 70rpx !important;
     }
 

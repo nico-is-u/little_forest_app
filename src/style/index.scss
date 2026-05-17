@@ -8,13 +8,23 @@ page {
   --app-bg-color: #f8faf8; /* app背景色 */
   --app-border-color:#e5e7eb; /* app边框色 */
 
+  --app-box-bg-color: #f2f4f2; /* app盒子背景色 */
+
   --app-primary-color: #047857b3; /* app主色 */
   --app-primary-color2: #1b9d6e;  /* app主色2 */
   --app-primary-color3: #c6e7d8;  /* app主色3 (薄荷绿) */
+  --app-primary-color4: #cce7de;  /* app主色4 (薄荷绿淡) */
   --app-secondary-color: #d1fae5; /* app次级色 */
+
+
+  --app-red-color: #f8625a;         /* app红色 */
+  --app-red-color2: #ffdad4;        /* app红色2 */
 
   --app-green-color: #007a31;       /* app绿色(大乱斗) */
   --app-green-text-color: #3acb70;
+
+  --app-gray-color: #eceeec;        /* app灰色 */
+  --app-gray-color2: #e6e9e7;       /* app灰色2 */
 
 
   --app-btn-dark-color: #476459;    /* app按钮 （disabled） */
@@ -23,6 +33,7 @@ page {
   --app-text-color3: #4b695d; /* app文字颜色2 */
   --app-text-dark-color2:#476459; /* app文字暗色 */
   --app-text-block-color: #191c1b; /* app文字黑色 */
+  --app-text-red-color: #9f3b2e; /* app文字红色 */
   --app-text-gray-color: #3d4a42; /* app文字灰色 */
 
   --app-input-placeholder:#47645999;  /* app输入框占位文字颜色 */
@@ -52,6 +63,28 @@ page {
 /* 关于uniapp的样式重置 */
 uni-page-body {
   height: 100%;
+}
+
+/* 关于uv-ui的样式重置 */
+
+/* 模态框 */
+.uv-popup{
+
+  --radius-size: 64rpx;
+
+  .uv-overlay{
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4rpx);
+  }
+
+  .uv-popup__content{
+    border-radius: var(--radius-size) !important;
+  }
+
+  .uv-line{
+    display: none;
+  }
+  
 }
 
 #app-layout{

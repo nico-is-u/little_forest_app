@@ -13,7 +13,7 @@
             <view class="desc text-gray-500 text-center">{{ desc }}</view>
         </view>
 
-        <button class="app-btn2 app-btn-circle" @click="$goHref('/','tab')">
+        <button class="app-btn app-btn-primary circle-1" @click="$goHref('/','tab')">
             <text class="app-iconfont if-icon-home-outline"></text>
             <text>去首页看看</text>
         </button>
@@ -69,7 +69,7 @@ defineProps({
         }
     }
 
-    .app-btn2{
+    .app-btn{
         width: 600rpx;
         margin-top: 60rpx;
         letter-spacing: 2rpx;
